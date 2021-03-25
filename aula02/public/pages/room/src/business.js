@@ -20,7 +20,7 @@ class Business {
     }
 
     async _init() {
-        this.currentStream = await this.media.getCamera();
+        this.currentStream = await this.media.getCamera(true);
         this.addVideoStream('test01');
     }
 
