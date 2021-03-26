@@ -27,11 +27,10 @@ class View {
         userId,
         stream = null,
         url = null,
-        isCurrentId = false,
-        muted = true
+        isCurrentId = false
     }) {
         const video = this.createVideoElement({
-            muted,
+            muted: isCurrentId,
             src: url,
             srcObject: stream,
         });

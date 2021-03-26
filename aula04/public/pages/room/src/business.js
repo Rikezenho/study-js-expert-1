@@ -50,7 +50,7 @@ class Business {
             recorderInstance.startRecording();
         }
 
-        const isCurrentId = false;
+        const isCurrentId = userId === this.currentPeer.id;
 
         this.view.renderVideo({
             userId,
@@ -118,6 +118,12 @@ class Business {
     onPeerStreamReceived() {
         return (call, stream) => {
             const callerId = call.peer;
+
+            if (this.peers.has(callerId)) {
+                console.log('calling twice, ignoring second call...', callerId);
+                return;
+            }
+
             this.addVideoStream(callerId, stream);
             this.peers.set(callerId, { call });
             this.view.setParticipants(this.peers.size);
