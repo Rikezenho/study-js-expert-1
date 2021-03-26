@@ -22,6 +22,7 @@ class Business {
 
     async _init() {
         this.view.configureRecordButton(this.onRecordPressed.bind(this));
+        this.view.configureLeaveButton(this.onLeavePressed.bind(this));
         this.currentStream = await this.media.getCamera();
 
         this.socket = this.socketBuilder
@@ -75,6 +76,7 @@ class Business {
             }
 
             this.view.setParticipants(this.peers.size);
+            this.stopRecording(userId);
             this.view.removeVideoElement(userId);
         };
     }
@@ -148,6 +150,20 @@ class Business {
             if (!isRecordingActive) continue;
 
             await rec.stopRecording();
+            this.playRecordings(key);
         }
+    }
+
+    playRecordings(userId) {
+        const user = this.usersRecordings.get(userId);
+        const videoURLs = user.getAllVideoURLs();
+        videoURLs.map((url) => {
+            this.view.renderVideo({ url, userId });
+        });
+    }
+
+    
+    onLeavePressed() {
+        this.usersRecordings.forEach((value, key) => value.download());
     }
 }
