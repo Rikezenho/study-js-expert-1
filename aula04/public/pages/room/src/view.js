@@ -45,7 +45,7 @@ class View {
 
         const nameDiv = document.createElement('div');
         nameDiv.innerText = isCurrentId ? '' : userId;
-        nameDiv.append(videoDiv);
+        videoDiv.append(nameDiv);
 
         const $videoGrid = document.getElementById('video-grid');
         $videoGrid.append(videoDiv);
